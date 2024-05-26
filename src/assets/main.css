@@ -1,7 +1,40 @@
 @import 'primeicons/primeicons.css';
 
-html {
-  font-size: 13px;
-  padding: 0;
-  margin: 0;
+html,
+body {
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+}
+
+.primary-deep-blue {
+    background-color: #4338ca;
+}
+
+.primary-light-blue {
+    background-color: #eef2ff;
+}
+
+.secondary-cool-grey {
+    background-color: #cbd5e1;
+}
+
+.secondary-white {
+    background-color: #ffffff;
+}
+
+.accent-light-green {
+    background-color: #84cc16;
+}
+
+.accent-red {
+    background-color: #dc2626;
+}
+
+.text-dark-grey {
+    color: #374151;
+}
+
+.text-medium-grey {
+    color: #6b7280;
 }
