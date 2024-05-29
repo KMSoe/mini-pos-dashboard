@@ -28,6 +28,8 @@
             <Column v-for="column in columns" :key="column.field" :field="column.field" :header="column.header"
                 :sortable="column.sortable" />
         </DataTable>
+
+        <Loading v-if="loading" />
     </div>
 </template>
 
@@ -39,6 +41,7 @@ import Column from 'primevue/column'
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
+import Loading from '@/components/Loading.vue'
 import { useCustomer } from './useCustomer'
 
 const { items, customers, columns, loading } = useCustomer()
