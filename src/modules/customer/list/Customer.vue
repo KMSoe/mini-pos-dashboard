@@ -10,9 +10,12 @@
             </template>
         </Breadcrumb>
 
-        <DataTable :value="customers" :loading="loading" paginator :rows="10" stripedRows removableSort>
+        <DataTable :value="customers" :loading="loading" stripedRows removableSort>
             <template #header>
                 <div class="flex justify-content-end">
+                    <Dropdown v-model="selectedVillage" :options="villages" optionLabel="name" optionValue="id"
+                        placeholder="Select a village" />
+
                     <IconField iconPosition="left">
                         <InputIcon>
                             <i class="pi pi-search" />
@@ -29,6 +32,8 @@
                 :sortable="column.sortable" />
         </DataTable>
 
+        <!-- <Bootstrap5Pagination :data="customerObject" @pagination-change-page="getCustomerList" /> -->
+
         <Loading v-if="loading" />
     </div>
 </template>
@@ -41,10 +46,12 @@ import Column from 'primevue/column'
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
 import Loading from '@/components/Loading.vue'
 import { useCustomer } from './useCustomer'
+import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 
-const { items, customers, columns, loading } = useCustomer()
+const { items, customers, columns, loading, villages, selectedVillage, customerObject, getCustomerList } = useCustomer()
 </script>
 
 <style lang="scss" scoped></style>

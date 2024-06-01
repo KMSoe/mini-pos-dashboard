@@ -1,8 +1,13 @@
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useCustomerStore } from '../store'
 
 export const useCustomer = () => {
     const customers = ref()
+    const customerObject = ref()
+    const villages = ref()
+    const selectedVillage = ref('all')
+    const limit = ref(10)
+
     const loading = ref(false)
     const store = useCustomerStore()
 
@@ -25,23 +30,27 @@ export const useCustomer = () => {
         { field: 'created_at', header: 'Created At', sortable: false }
     ])
 
-    onMounted(async () => {
-        await getCustomerList()
+    onMounted(() => {
+        getCustomerList()
+        getVillageList()
     })
 
-    const getCustomerList = async () => {
+    const getCustomerList = async (page = 1) => {
         loading.value = true
 
         try {
-            await store.getCustomers({
-                village_id: 'all',
-                search: ''
+            await store.fetchCustomers({
+                village_id: selectedVillage.value,
+                search: '',
+                limit: limit,
+                page
             })
 
             const response = store.getCustomerList
 
             if (response) {
                 customers.value = response.customers.data
+                customerObject.value = response.customers
             }
         } catch (error) {
             loading.value = false
@@ -51,10 +60,38 @@ export const useCustomer = () => {
         loading.value = false
     }
 
+    const getVillageList = async () => {
+        loading.value = true
+
+        try {
+            await store.fetchVillages()
+
+            const response = store.getVillageList
+
+            if (response) {
+                villages.value = response.villages
+            }
+        } catch (error) {
+            loading.value = false
+            console.log(error)
+        }
+
+        loading.value = false
+    }
+
+    watch(selectedVillage, () => {
+        getCustomerList()
+    })
+
     return {
         items,
         customers,
         columns,
-        loading
+        loading,
+        villages,
+        selectedVillage,
+        limit,
+        customerObject,
+        getCustomerList
     }
 }

@@ -4,18 +4,25 @@ import { service } from './service'
 export const useCustomerStore = defineStore({
     id: 'useCustomerStore',
     state: () => ({
-        listCustomers: null
+        customerList: null,
+        villageList: null
     }),
 
     getters: {
         getCustomerList(state) {
-            return state.listCustomers
+            return state.customerList
+        },
+        getVillageList(state) {
+            return state.villageList
         }
     },
 
     actions: {
-        async getCustomers(params) {
-            this.listCustomers = await service.getCustomers(params)
+        async fetchCustomers(params) {
+            this.customerList = await service.getCustomers(params)
+        },
+        async fetchVillages() {
+            this.villageList = await service.getVillages()
         }
     }
 })

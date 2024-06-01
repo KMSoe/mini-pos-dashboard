@@ -34,8 +34,6 @@ router.beforeEach((to, from, next) => {
 
     const isLoggedIn = localStorage.getItem('accessToken') ? true : false
 
-    console.log(isLoggedIn)
-
     if (to.meta.auth && !isLoggedIn) {
         return next({ name: 'login' })
     }

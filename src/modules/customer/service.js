@@ -7,6 +7,11 @@ const service = {
         )
 
         return customers.data
+    },
+    getVillages: async () => {
+        const villages = await api.get('customers-page-data')
+
+        return villages.data
     }
 }
 
