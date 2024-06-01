@@ -8,30 +8,29 @@
             <div class="nav-items">
                 <span>User</span>
                 <span>Notifications</span>
+                <span @click='handleLogout'>Logout</span>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { defineEmits } from 'vue'
+import { useAuthStore } from '@/modules/auth/store'
 
-export default defineComponent({
-    name: 'AppNavbar',
-    emits: ['toggle-sidebar'],
-    setup(props, { emit }) {
-        const emitToggleSidebar = () => {
-            emit('toggle-sidebar')
-        }
+const store = useAuthStore()
 
-        const appName = import.meta.env.VITE_APP_NAME
+const emit = defineEmits(['toggle-sidebar'])
 
-        return {
-            emitToggleSidebar,
-            appName
-        }
-    }
-})
+const emitToggleSidebar = () => {
+    emit('toggle-sidebar')
+}
+
+const appName = import.meta.env.VITE_APP_NAME
+
+const handleLogout = () => {
+    store.logout()
+}
 </script>
 
 <style scoped>

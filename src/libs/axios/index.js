@@ -1,13 +1,74 @@
 import axios from 'axios'
+import EventBus from '@/libs/AppEventBus'
+import { useAuthStore } from '@/modules/auth/store'
+import router from '@/router'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
-  headers: {
-    Accept: 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-    Authorization:
-      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiNDU5MTIzYWUwNmIxMzRjNTljMDRmZGQ5ZjEyMTBjYTZlYmNhNDhlNWQ1NGIxYTFkNTNlNjFkNjI2MGJkMjUxMjdkNGI0ZmNiYzg0N2JlMDIiLCJpYXQiOjE3MTY1NTk5NzAuOTM5MDQ5LCJuYmYiOjE3MTY1NTk5NzAuOTM5MDUsImV4cCI6MTczMjQ1NzU3MC45MzM2MjgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.xaqtpYu8zMEMDd1onUif9DcVbOXSiU9YgZtY0KfbtbY8RJnWRbyM597bWa41g5EjlpkGr90IgMUCd5KRDKgmfNOon12aXxbmnj8G-rYdVGn8KivwpIoyImN2JzR1ftY_5dmfEDUa8eAuH1j7VFZvF3Rb4IKoanAfahDkKPoB0L6inFrgxSMEN77vWU7mkD0riF5GctXJR05AVEWzJ6-To7QAzfUWYg7XQk0wuo8Qvuf2ruYxp5u0W22RnSJzHdd5Mw513nFAM21_VzqcIrcC6pvuuwWhYfpbbUaYSpZviqKlxUZ8uQCMlMeBFo9OGf-qwrFT2HpL-AgWbNeETx5jGUOv6NSI4-h1rSTO5NTVZqseAJ51Y5ok0xi6lMembKo8F7xRQcJDT81GV4ucyFZkeQTy8XbQ3MrS3fMSLfkRL_4yPy_X-bs9cjngvkOjS5oTLCQCMWwV788FqBPaa6L1jkMbPB0wbGf-a8tbBB0SoS9lEQQqrTU-vE_F1cDCEeu1iZZSi1o_JTspc48_JiaLoxNNgxfMvfuzrnMHSZSLRUjJnNq4nlUSXgeg7Q24yzhaG_eOjj1cCa9gNgROpY4LrKrzmv3AkUrcdn2WD9xrc9Y84D5v-S3GOkeHCrf4dZxVnPG-wWdZ0sVjRDs2aylg8IO00gS9AKWhnn7_fwOY0jg'
-  }
+    baseURL: import.meta.env.VITE_BASE_URL,
+    headers: {
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    }
 })
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('accessToken')
+
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`
+    }
+
+    return config
+})
+
+api.interceptors.response.use(
+    (res) => {
+        if (res.config.method !== 'get') {
+            if (res.data.message !== '') showToast(res.data.message, 'info')
+        }
+
+        return res
+    },
+    (err) => {
+        if (err.response) {
+            const store = useAuthStore()
+
+            if (err.response.status === 401) {
+                store.clearLocalStorage()
+                router.push({ name: 'login' })
+            } else if (err.response.status === 403) {
+                store.clearLocalStorage()
+                router.push({ name: 'login' })
+            } else if (err.response.status === 422) {
+                return Promise.reject(err.response)
+            } else if (err.response.status === 404) {
+                router.push({ name: 'error404' })
+            }
+
+            if (err.response.config.url === '/auth/login') {
+                store.setLoginError(err.response.data.message)
+
+                return Promise.reject(err.response)
+            } else {
+                showToast(err.response.data.message)
+            }
+        } else if (err.request) {
+            showToast(err.message)
+        } else {
+            showToast(err.message)
+        }
+        if (err.code === 'ERR_NETWORK') {
+            showToast(err.message)
+        }
+    }
+)
+
+function showToast(message, type = 'error') {
+    EventBus.emit('show-toast', {
+        severity: type,
+        summary: '',
+        detail: message
+    })
+}
 
 export default api

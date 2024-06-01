@@ -1,20 +1,21 @@
 import { defineStore } from 'pinia'
 import { service } from './service'
 
-export const useCustomerStore = defineStore('customer', {
-  state: () => ({
-    listCustomers: null
-  }),
+export const useCustomerStore = defineStore({
+    id: 'useCustomerStore',
+    state: () => ({
+        listCustomers: null
+    }),
 
-  getters: {
-    getCustomerList(state) {
-      return state.listCustomers
-    }
-  },
+    getters: {
+        getCustomerList(state) {
+            return state.listCustomers
+        }
+    },
 
-  actions: {
-    async getCustomers(params) {
-      this.listCustomers = await service.getCustomers(params)
+    actions: {
+        async getCustomers(params) {
+            this.listCustomers = await service.getCustomers(params)
+        }
     }
-  }
 })

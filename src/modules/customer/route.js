@@ -8,7 +8,8 @@ const moduleRoutes = [
             {
                 path: '',
                 name: 'customer',
-                component: () => import('@/modules/customer/list/Customer.vue')
+                component: () => import('@/modules/customer/list/Customer.vue'),
+                meta: { auth: true }
             }
         ]
     }

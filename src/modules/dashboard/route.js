@@ -8,7 +8,8 @@ const moduleRoutes = [
             {
                 path: '',
                 name: 'dashboard',
-                component: () => import('@/modules/dashboard/list/Dashboard.vue')
+                component: () => import('@/modules/dashboard/list/Dashboard.vue'),
+                meta: { auth: true }
             }
         ]
     }

@@ -41,7 +41,7 @@ export const useCustomer = () => {
             const response = store.getCustomerList
 
             if (response) {
-                customers.value = response.data.customers.data
+                customers.value = response.customers.data
             }
         } catch (error) {
             loading.value = false
