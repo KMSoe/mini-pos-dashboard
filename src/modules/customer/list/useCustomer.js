@@ -3,10 +3,12 @@ import { useCustomerStore } from '../store'
 
 export const useCustomer = () => {
     const customers = ref()
-    const customerObject = ref()
     const villages = ref()
-    const selectedVillage = ref('all')
+    const selectedVillage = ref(null)
     const limit = ref(10)
+    const dt = ref()
+    const params = ref({})
+    const totalRecords = ref(0)
 
     const loading = ref(false)
     const store = useCustomerStore()
@@ -31,26 +33,27 @@ export const useCustomer = () => {
     ])
 
     onMounted(() => {
+        resetPagination()
         getCustomerList()
         getVillageList()
     })
 
-    const getCustomerList = async (page = 1) => {
+    const getCustomerList = async () => {
         loading.value = true
 
         try {
             await store.fetchCustomers({
-                village_id: selectedVillage.value,
-                search: '',
-                limit: limit,
-                page
+                limit: params.value.rows,
+                page: params.value.page,
+                village_id: selectedVillage.value ? selectedVillage.value : 'all',
+                search: ''
             })
 
             const response = store.getCustomerList
 
             if (response) {
                 customers.value = response.customers.data
-                customerObject.value = response.customers
+                totalRecords.value = response.customers.total
             }
         } catch (error) {
             loading.value = false
@@ -83,6 +86,20 @@ export const useCustomer = () => {
         getCustomerList()
     })
 
+    const resetPagination = () => {
+        params.value = {
+            page: 1,
+            rows: dt.value.rows
+        }
+    }
+
+    const onPage = (event) => {
+        params.value = event
+        params.value.page = event.first / event.rows
+        params.value.page += 1
+        getCustomerList()
+    }
+
     return {
         items,
         customers,
@@ -91,7 +108,9 @@ export const useCustomer = () => {
         villages,
         selectedVillage,
         limit,
-        customerObject,
-        getCustomerList
+        dt,
+        params,
+        totalRecords,
+        onPage
     }
 }

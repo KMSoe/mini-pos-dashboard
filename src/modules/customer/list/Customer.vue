@@ -10,11 +10,12 @@
             </template>
         </Breadcrumb>
 
-        <DataTable :value="customers" :loading="loading" stripedRows removableSort>
+        <DataTable ref="dt" datakey="id" :value="customers" :loading="loading" stripedRows :lazy="true"
+            :paginator="true" @page="onPage($event)" :totalRecords="totalRecords" :rows="10">
             <template #header>
-                <div class="flex justify-content-end">
+                <div class="flex justify-content-end gap-1">
                     <Dropdown v-model="selectedVillage" :options="villages" optionLabel="name" optionValue="id"
-                        placeholder="Select a village" />
+                        showClear placeholder="Select a village" />
 
                     <IconField iconPosition="left">
                         <InputIcon>
@@ -22,6 +23,8 @@
                         </InputIcon>
                         <InputText placeholder="Keyword Search" />
                     </IconField>
+
+                    <Button label="Add Customer" />
                 </div>
             </template>
 
@@ -31,8 +34,6 @@
             <Column v-for="column in columns" :key="column.field" :field="column.field" :header="column.header"
                 :sortable="column.sortable" />
         </DataTable>
-
-        <!-- <Bootstrap5Pagination :data="customerObject" @pagination-change-page="getCustomerList" /> -->
 
         <Loading v-if="loading" />
     </div>
@@ -47,11 +48,21 @@ import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
+import Button from 'primevue/button'
 import Loading from '@/components/Loading.vue'
 import { useCustomer } from './useCustomer'
-import { Bootstrap5Pagination } from 'laravel-vue-pagination'
 
-const { items, customers, columns, loading, villages, selectedVillage, customerObject, getCustomerList } = useCustomer()
+const {
+    items,
+    customers,
+    columns,
+    loading,
+    villages,
+    selectedVillage,
+    dt,
+    totalRecords,
+    onPage
+} = useCustomer()
 </script>
 
 <style lang="scss" scoped></style>
