@@ -3,7 +3,7 @@
         <nav>
             <ul>
                 <template v-for="item in menuItems" :key="item.text">
-                    <router-link :to="{ name: item.route }" style="text-decoration: none;">
+                    <router-link :to="{ name: item.route }" style="text-decoration: none">
                         <li>
                             <i :class="item.icon" class="text-xl" />
                             <span v-if="!isCollapsed">{{ item.text }}</span>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'AppSidebar',
@@ -26,15 +26,14 @@ export default defineComponent({
             default: false
         }
     },
-    setup(props) {
+    setup() {
         const menuItems = [
             { icon: 'pi pi-home', text: 'Dashboard', route: 'dashboard' },
-            { icon: 'pi pi-user', text: 'Customers', route: 'customer' },
+            { icon: 'pi pi-user', text: 'Customers', route: 'customer' }
         ]
 
         return {
-            menuItems,
-            isCollapsed: computed(() => props.isCollapsed)
+            menuItems
         }
     }
 })
@@ -72,7 +71,7 @@ li {
 }
 
 li:hover {
-    background-color: #EEF2FF;
+    background-color: #eef2ff;
     transition-delay: 0.1s;
 }
 

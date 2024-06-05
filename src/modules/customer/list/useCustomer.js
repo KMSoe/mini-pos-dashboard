@@ -1,4 +1,4 @@
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useCustomerStore } from '../store'
 
 export const useCustomer = () => {
@@ -9,6 +9,9 @@ export const useCustomer = () => {
     const dt = ref()
     const params = ref({})
     const totalRecords = ref(0)
+    const search = ref(null)
+
+    let timeoutId
 
     const loading = ref(false)
     const store = useCustomerStore()
@@ -19,17 +22,17 @@ export const useCustomer = () => {
     ])
 
     const columns = ref([
-        { field: 'name', header: 'Customer', sortable: true },
-        { field: 'village_name', header: 'Village', sortable: true },
-        { field: 'first_phone_number', header: 'First Phone Number', sortable: true },
-        { field: 'second_phone_number', header: 'Second Phone Number', sortable: true },
-        { field: 'order_count', header: 'Order Count', sortable: true },
-        { field: 'order_amount', header: 'Order Amount', sortable: true },
-        { field: 'purchase_amount', header: 'Purchase Amount', sortable: true },
-        { field: 'last_order_date', header: 'Last Order Date', sortable: false },
-        { field: 'last_purchase_date', header: 'Last Purchase Date', sortable: false },
-        { field: 'remark', header: 'Remark', sortable: false },
-        { field: 'created_at', header: 'Created At', sortable: false }
+        { field: 'name', header: 'Customer' },
+        { field: 'village_name', header: 'Village' },
+        { field: 'first_phone_number', header: 'First Phone Number' },
+        { field: 'second_phone_number', header: 'Second Phone Number' },
+        { field: 'order_count', header: 'Order Count' },
+        { field: 'order_amount', header: 'Order Amount' },
+        { field: 'purchase_amount', header: 'Purchase Amount' },
+        { field: 'last_order_date', header: 'Last Order Date' },
+        { field: 'last_purchase_date', header: 'Last Purchase Date' },
+        { field: 'remark', header: 'Remark' },
+        { field: 'created_at', header: 'Created At' }
     ])
 
     onMounted(() => {
@@ -46,7 +49,7 @@ export const useCustomer = () => {
                 limit: params.value.rows,
                 page: params.value.page,
                 village_id: selectedVillage.value ? selectedVillage.value : 'all',
-                search: ''
+                search: search.value ? search.value : ''
             })
 
             const response = store.getCustomerList
@@ -100,6 +103,18 @@ export const useCustomer = () => {
         getCustomerList()
     }
 
+    watch([search], () => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            filterSearch()
+        }, 500)
+    })
+
+    const filterSearch = () => {
+        resetPagination()
+        getCustomerList()
+    }
+
     return {
         items,
         customers,
@@ -111,6 +126,8 @@ export const useCustomer = () => {
         dt,
         params,
         totalRecords,
-        onPage
+        onPage,
+        search,
+        filterSearch
     }
 }

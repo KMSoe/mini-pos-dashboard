@@ -20,6 +20,7 @@ export class Errors {
      */
     hasMessage() {
         return (
+            // eslint-disable-next-line no-prototype-builtins
             this.errors.hasOwnProperty('message') &&
             this.errors.message !== null &&
             this.errors.message !== undefined

@@ -10,18 +10,38 @@
             </template>
         </Breadcrumb>
 
-        <DataTable ref="dt" datakey="id" :value="customers" :loading="loading" stripedRows :lazy="true"
-            :paginator="true" @page="onPage($event)" :totalRecords="totalRecords" :rows="10">
+        <DataTable
+            ref="dt"
+            datakey="id"
+            :value="customers"
+            :loading="loading"
+            stripedRows
+            :lazy="true"
+            :paginator="true"
+            @page="onPage($event)"
+            :totalRecords="totalRecords"
+            :rows="10"
+        >
             <template #header>
                 <div class="flex justify-content-end gap-1">
-                    <Dropdown v-model="selectedVillage" :options="villages" optionLabel="name" optionValue="id"
-                        showClear placeholder="Select a village" />
+                    <Dropdown
+                        v-model="selectedVillage"
+                        :options="villages"
+                        optionLabel="name"
+                        optionValue="id"
+                        showClear
+                        placeholder="Select a village"
+                    />
 
                     <IconField iconPosition="left">
                         <InputIcon>
                             <i class="pi pi-search" />
                         </InputIcon>
-                        <InputText placeholder="Keyword Search" />
+                        <InputText
+                            placeholder="Keyword Search"
+                            v-model="search"
+                            @keydown.enter="filterSearch"
+                        />
                     </IconField>
 
                     <Button label="Add Customer" />
@@ -31,14 +51,18 @@
             <template #empty> No Customers found.</template>
             <template #loading> Loading Customers data. Please wait.</template>
 
-            <Column v-for="column in columns" :key="column.field" :field="column.field" :header="column.header"
-                :sortable="column.sortable" />
+            <Column
+                v-for="column in columns"
+                :key="column.field"
+                :field="column.field"
+                :header="column.header"
+                :sortable="column.sortable"
+            />
         </DataTable>
 
         <Loading v-if="loading" />
     </div>
 </template>
-
 
 <script setup>
 import Breadcrumb from 'primevue/breadcrumb'
@@ -61,7 +85,9 @@ const {
     selectedVillage,
     dt,
     totalRecords,
-    onPage
+    onPage,
+    search,
+    filterSearch
 } = useCustomer()
 </script>
 
