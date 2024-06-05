@@ -7,9 +7,9 @@
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview",
-        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-        "format": "prettier .  --write",
-        "prepare": "husky"
+        "lint": "eslint \"**/*.{vue,js,jsx,cjs,mjs}\" --fix",
+        "format": "prettier . --write",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@vuelidate/core": "^2.0.3",
@@ -37,7 +37,7 @@
     },
     "lint-staged": {
         "*.{js,vue,jsx,cjs,mjs}": [
-            "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+            "eslint --fix",
             "prettier --write --ignore-unknown"
         ]
     }

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EventBus from '@/libs/AppEventBus'
-import { useAuthStore } from '@/modules/auth/store'
 
 // Routes
 import authRoutes from '@/modules/auth/route'
@@ -30,12 +29,18 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     EventBus.emit('progress', true)
+    // eslint-disable-next-line no-undef
     window.scrollTo(0, 0)
 
+    // eslint-disable-next-line no-undef
     const isLoggedIn = localStorage.getItem('accessToken') ? true : false
 
     if (to.meta.auth && !isLoggedIn) {
         return next({ name: 'login' })
+    }
+
+    if (to.meta.redirectIfLoggedIn && isLoggedIn) {
+        return next({ name: 'dashboard' })
     }
 
     return next()

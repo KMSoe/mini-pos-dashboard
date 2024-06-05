@@ -3,9 +3,10 @@ const moduleRoutes = [
         path: '/',
         children: [
             {
-                path: '',
+                path: 'login',
                 name: 'login',
-                component: () => import('@/modules/auth/list/Login.vue')
+                component: () => import('@/modules/auth/list/Login.vue'),
+                meta: { redirectIfLoggedIn: true, title: 'Login' }
             }
         ]
     }

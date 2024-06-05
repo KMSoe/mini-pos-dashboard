@@ -2,7 +2,7 @@ import AppLayout from '@/layouts/AppLayout.vue'
 
 const moduleRoutes = [
     {
-        path: '/dashboard',
+        path: '/',
         component: AppLayout,
         children: [
             {
