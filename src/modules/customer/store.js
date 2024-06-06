@@ -5,7 +5,8 @@ export const useCustomerStore = defineStore({
     id: 'useCustomerStore',
     state: () => ({
         customerList: null,
-        villageList: null
+        villageList: null,
+        newCustomer: null
     }),
 
     getters: {
@@ -14,6 +15,9 @@ export const useCustomerStore = defineStore({
         },
         getVillageList(state) {
             return state.villageList
+        },
+        getNewCustomer(state) {
+            return state.newCustomer
         }
     },
 
@@ -23,6 +27,9 @@ export const useCustomerStore = defineStore({
         },
         async fetchVillages() {
             this.villageList = await service.getVillages()
+        },
+        async addNewCustomer(params) {
+            this.newCustomer = await service.createCustomer(params)
         }
     }
 })

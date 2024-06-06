@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <Breadcrumb :model="items" class="mb-3">
+        <!-- <Breadcrumb :model="items" class="mb-3">
             <template #item="{ item, props }">
                 <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
                     <a :href="href" v-bind="props.action" @click="navigate">
@@ -8,7 +8,7 @@
                     </a>
                 </router-link>
             </template>
-        </Breadcrumb>
+</Breadcrumb> -->
 
         <DataTable
             ref="dt"
@@ -44,7 +44,9 @@
                         />
                     </IconField>
 
-                    <Button label="Add Customer" />
+                    <router-link :to="{ name: 'add-customer' }">
+                        <Button label="Add Customer" />
+                    </router-link>
                 </div>
             </template>
 
@@ -65,7 +67,6 @@
 </template>
 
 <script setup>
-import Breadcrumb from 'primevue/breadcrumb'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import IconField from 'primevue/iconfield'
@@ -77,7 +78,6 @@ import Loading from '@/components/Loading.vue'
 import { useCustomer } from './useCustomer'
 
 const {
-    items,
     customers,
     columns,
     loading,
