@@ -29,7 +29,8 @@ export default defineComponent({
     setup() {
         const menuItems = [
             { icon: 'pi pi-home', text: 'Dashboard', route: 'dashboard' },
-            { icon: 'pi pi-user', text: 'Customers', route: 'customer' }
+            { icon: 'pi pi-user', text: 'Customers', route: 'customer' },
+            { icon: 'pi pi-user', text: 'Orders', route: 'order' }
         ]
 
         return {

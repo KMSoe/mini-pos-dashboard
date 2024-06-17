@@ -5,11 +5,13 @@ import EventBus from '@/libs/AppEventBus'
 import authRoutes from '@/modules/auth/route'
 import dashboardRoutes from '@/modules/dashboard/route'
 import customerRoutes from '@/modules/customer/route'
+import orderRoutes from '@/modules/order/route'
 
 const routes = [
     ...authRoutes,
     ...dashboardRoutes,
     ...customerRoutes,
+    ...orderRoutes,
     {
         path: '/badpage',
         name: 'error404',
