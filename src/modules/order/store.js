@@ -6,7 +6,8 @@ export const useOrderStore = defineStore({
     state: () => ({
         orderList: null,
         orderPageData: null,
-        newOrder: null
+        newOrder: null,
+        newCustomer: null
     }),
 
     getters: {
@@ -18,6 +19,9 @@ export const useOrderStore = defineStore({
         },
         getNewOrder(state) {
             return state.newOrder
+        },
+        getNewCustomer(state) {
+            return state.newCustomer
         }
     },
 
@@ -30,6 +34,9 @@ export const useOrderStore = defineStore({
         },
         async addNewOrder(params) {
             this.newOrder = await service.createOrder(params)
+        },
+        async addNewCustomer(params) {
+            this.newCustomer = await service.createCustomer(params)
         }
     }
 })

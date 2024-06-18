@@ -76,7 +76,24 @@ export const useNewOrder = () => {
         loading.value = false
     }
 
-    const createCustomer = () => {}
+    const createCustomer = async () => {
+        try {
+            await store.addNewCustomer({
+                name: customerState.name,
+                village_id: customerState.village_id,
+                first_phone_number: customerState.first_phone_number,
+                second_phone_number: customerState.second_phone_number
+            })
+
+            const response = store.getNewCustomer
+
+            if (response) {
+                console.log(response)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleSubmit = (isFormValid) => {
         submitted.value = true
