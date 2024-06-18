@@ -152,7 +152,11 @@
                     <label for="date" :class="{ 'p-error': v$.date.$invalid && submitted }"
                         >Date</label
                     >
-                    <!-- <DatePicker v-model="v$.date.$model" showIcon class="w-full"/> -->
+                    <VueDatePicker
+                        v-model="v$.date.$model"
+                        :enable-time-picker="false"
+                        class="w-full"
+                    />
                 </div>
 
                 <div class="p-field mb-4">
@@ -209,6 +213,18 @@
                     </span>
                 </div>
                 <div class="p-field mb-4">
+                    <label
+                        for="date"
+                        :class="{ 'p-error': v$.will_purchase_date.$invalid && submitted }"
+                        >Will purchase Date</label
+                    >
+                    <VueDatePicker
+                        v-model="v$.will_purchase_date.$model"
+                        :enable-time-picker="false"
+                        class="w-full"
+                    />
+                </div>
+                <div class="p-field mb-4">
                     <label for="remark" :class="{ 'p-error': v$.remark.$invalid && submitted }"
                         >Remark</label
                     >
@@ -227,7 +243,8 @@
 import InputText from 'primevue/inputtext'
 import RadioButton from 'primevue/radiobutton'
 import Textarea from 'primevue/textarea'
-// import DatePicker from 'primevue/datepicker';
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import { useNewOrder } from './useNew'

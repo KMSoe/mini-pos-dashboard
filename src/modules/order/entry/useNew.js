@@ -88,7 +88,9 @@ export const useNewOrder = () => {
             const response = store.getNewCustomer
 
             if (response) {
-                console.log(response)
+                customers.value = [...customers.value, response.customer]
+                orderState.customer_id = response.customer.id
+                customer_type.value = 'existing'
             }
         } catch (error) {
             console.log(error)
@@ -109,7 +111,15 @@ export const useNewOrder = () => {
         loading.value = true
 
         try {
-            await store.addNewOrder({})
+            await store.addNewOrder({
+                customer_id: orderState.customer_id,
+                voucher_code: orderState.voucher_code,
+                date: orderState.date,
+                voucher_amount: orderState.voucher_amount,
+                purchase_amount: orderState.purchase_amount,
+                will_purchase_date: orderState.will_purchase_date,
+                remark: orderState.remark
+            })
 
             const response = store.getNewOrder
 
