@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 
 export const useNewOrder = () => {
     const customer_type = ref('existing')
+    const orderFormErrors = ref(null)
     const customers = ref()
     const villages = ref()
     const loading = ref(false)
@@ -107,6 +108,18 @@ export const useNewOrder = () => {
         createOrder()
     }
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear()
+
+        if (month.length < 2) month = '0' + month
+        if (day.length < 2) day = '0' + day
+
+        return [year, month, day].join('-')
+    }
+
     const createOrder = async () => {
         loading.value = true
 
@@ -114,10 +127,10 @@ export const useNewOrder = () => {
             await store.addNewOrder({
                 customer_id: orderState.customer_id,
                 voucher_code: orderState.voucher_code,
-                date: orderState.date,
+                date: formatDate(orderState.date),
                 voucher_amount: orderState.voucher_amount,
                 purchase_amount: orderState.purchase_amount,
-                will_purchase_date: orderState.will_purchase_date,
+                will_purchase_date: formatDate(orderState.will_purchase_date),
                 remark: orderState.remark
             })
 
@@ -128,7 +141,9 @@ export const useNewOrder = () => {
             }
         } catch (error) {
             loading.value = false
-            console.log(error)
+            if (error.status == 422) {
+                orderFormErrors.value = error.data.errors
+            }
         }
 
         loading.value = false
@@ -136,6 +151,7 @@ export const useNewOrder = () => {
 
     return {
         customer_type,
+        orderFormErrors,
         customers,
         villages,
         createCustomer,

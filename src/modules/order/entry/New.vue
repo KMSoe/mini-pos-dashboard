@@ -2,6 +2,7 @@
     <div class="card mt-2 bg-white p-5">
         <form @submit.prevent="handleSubmit(!v$.$invalid)" class="fadeinout animation-duration-500">
             <div class="w-full mx-auto">
+                <Error :errors="orderFormErrors" />
                 <!-- Customer -->
                 <div class="p-field mb-4">
                     <div class="flex flex-wrap gap-4">
@@ -155,6 +156,7 @@
                     <VueDatePicker
                         v-model="v$.date.$model"
                         :enable-time-picker="false"
+                        :format="format"
                         class="w-full"
                     />
                 </div>
@@ -221,6 +223,7 @@
                     <VueDatePicker
                         v-model="v$.will_purchase_date.$model"
                         :enable-time-picker="false"
+                        :format="format"
                         class="w-full"
                     />
                 </div>
@@ -249,6 +252,15 @@ import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import { useNewOrder } from './useNew'
 import Loading from '@/components/Loading.vue'
+import Error from '@/components/Error.vue'
+
+const format = (date) => {
+    const day = date.getDate()
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+
+    return `Selected date is ${day}/${month}/${year}`
+}
 
 const {
     loading,
@@ -259,7 +271,8 @@ const {
     v$,
     v$1,
     handleSubmit,
-    submitted
+    submitted,
+    orderFormErrors
 } = useNewOrder()
 </script>
 
