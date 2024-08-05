@@ -8,6 +8,11 @@ const service = {
 
         return orders.data
     },
+    getOrder: async (id) => {
+        const response = await api.get(`/orders/${id}`)
+
+        return response.data.data.order
+    },
     getOrderPageData: async () => {
         const data = await api.get('orders-page-data')
 
@@ -17,6 +22,11 @@ const service = {
         const orders = await api.post('/orders', params)
 
         return orders.data
+    },
+    updateOrder: async (params) => {
+        const response = await api.put(`/orders/${params.id}`, params)
+
+        return response.data.data.order
     },
     createCustomer: async (params) => {
         const response = await api.post('/customers', params)

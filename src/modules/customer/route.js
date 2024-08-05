@@ -12,9 +12,15 @@ const moduleRoutes = [
                 meta: { auth: true }
             },
             {
-                path: 'add-customer',
-                name: 'add-customer',
+                path: 'create',
+                name: 'customer-create',
                 component: () => import('@/modules/customer/entry/New.vue'),
+                meta: { auth: true }
+            },
+            {
+                path: ':id/edit',
+                name: 'customer-edit',
+                component: () => import('@/modules/customer/edit/Edit.vue'),
                 meta: { auth: true }
             }
         ]

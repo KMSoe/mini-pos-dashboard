@@ -8,6 +8,11 @@ const service = {
 
         return customers.data
     },
+    getCustomer: async (id) => {
+        const response = await api.get(`/customers/${id}`)
+
+        return response.data.data.customer
+    },
     getVillages: async () => {
         const villages = await api.get('customers-page-data')
 
@@ -17,6 +22,11 @@ const service = {
         const customers = await api.post('/customers', params)
 
         return customers.data
+    },
+    updateCustomer: async (params) => {
+        const response = await api.put(`/customers/${params.id}`, params)
+
+        return response.data.data.customer
     }
 }
 

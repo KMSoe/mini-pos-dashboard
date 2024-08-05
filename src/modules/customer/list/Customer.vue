@@ -44,7 +44,7 @@
                         />
                     </IconField>
 
-                    <router-link :to="{ name: 'add-customer' }">
+                    <router-link :to="{ name: 'customer-create' }">
                         <Button label="Add Customer" />
                     </router-link>
                 </div>

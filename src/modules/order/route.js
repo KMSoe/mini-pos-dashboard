@@ -16,6 +16,12 @@ const moduleRoutes = [
                 name: 'add-order',
                 component: () => import('@/modules/order/entry/New.vue'),
                 meta: { auth: true }
+            },
+            {
+                path: ':id/edit',
+                name: 'edit',
+                component: () => import('@/modules/order/edit/Edit.vue'),
+                meta: { auth: true }
             }
         ]
     }

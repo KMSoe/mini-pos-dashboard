@@ -29,6 +29,7 @@ export const useCustomer = () => {
         { field: 'order_count', header: 'Order Count' },
         { field: 'order_amount', header: 'Order Amount' },
         { field: 'purchase_amount', header: 'Purchase Amount' },
+        { field: 'left', header: 'Left' },
         { field: 'last_order_date', header: 'Last Order Date' },
         { field: 'last_purchase_date', header: 'Last Purchase Date' },
         { field: 'remark', header: 'Remark' },
