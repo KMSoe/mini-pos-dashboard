@@ -2,10 +2,11 @@ import { ref, onMounted, reactive } from 'vue'
 import { useCustomerStore } from '../store'
 import { required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export const useEditCustomer = () => {
     const route = useRoute()
+    const router = useRouter()
 
     const villages = ref()
     const selectedVillage = ref(null)
@@ -87,13 +88,17 @@ export const useEditCustomer = () => {
         loading.value = true
 
         try {
-            await store.updateCustomer({
+            const response = await store.updateCustomer({
                 id: route.params.id,
                 name: state.name,
                 village_id: selectedVillage.value,
                 first_phone_number: state.first_phone_number,
                 second_phone_number: state.second_phone_number
             })
+
+            if (response) {
+                await router.push({ name: 'customer' })
+            }
         } catch (error) {
             loading.value = false
             console.log(error)

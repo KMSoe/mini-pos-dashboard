@@ -45,6 +45,9 @@ export const useOrderStore = defineStore({
         async updateOrder(params) {
             this.order = await service.updateOrder(params)
         },
+        async deleteOrder(id) {
+            await service.deleteOrder(id)
+        },
         async addNewCustomer(params) {
             this.newCustomer = await service.createCustomer(params)
         }

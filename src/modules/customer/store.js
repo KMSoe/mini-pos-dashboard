@@ -39,7 +39,7 @@ export const useCustomerStore = defineStore({
             this.newCustomer = await service.createCustomer(params)
         },
         async updateCustomer(params) {
-            this.customer = await service.updateCustomer(params)
+            return await service.updateCustomer(params)
         }
     }
 })

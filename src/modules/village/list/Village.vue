@@ -13,7 +13,7 @@
         <DataTable
             ref="dt"
             datakey="id"
-            :value="orders"
+            :value="villages"
             :loading="loading"
             stripedRows
             :lazy="true"
@@ -24,34 +24,25 @@
         >
             <template #header>
                 <div class="flex justify-content-end gap-1">
-                    <Dropdown
-                        v-model="selectedVillage"
-                        :options="villages"
-                        optionLabel="name"
-                        optionValue="id"
-                        showClear
-                        placeholder="Select a village"
-                    />
-
                     <IconField iconPosition="left">
                         <InputIcon>
                             <i class="pi pi-search" />
                         </InputIcon>
                         <InputText
-                            placeholder="Customer Name"
+                            placeholder="Keyword Search"
                             v-model="search"
                             @keydown.enter="filterSearch"
                         />
                     </IconField>
 
-                    <router-link :to="{ name: 'add-order' }">
-                        <Button label="Add Order" />
+                    <router-link :to="{ name: 'village-create' }">
+                        <Button label="Add Village" />
                     </router-link>
                 </div>
             </template>
 
-            <template #empty> No Order found.</template>
-            <template #loading> Loading Orders data. Please wait.</template>
+            <template #empty> No Villages found.</template>
+            <template #loading> Loading Villages data. Please wait.</template>
 
             <Column
                 v-for="column in columns"
@@ -62,14 +53,9 @@
             />
             <Column field="action" header="Action">
                 <template #body="slotProps">
-                    <router-link :to="{ name: 'edit-order', params: { id: slotProps.data.id } }">
+                    <router-link :to="{ name: 'village-edit', params: { id: slotProps.data.id } }">
                         <Button icon="pi pi-pencil" class="m-1" />
                     </router-link>
-                    <Button
-                        @click.prevent="deleteOrder(slotProps.data.id)"
-                        icon="pi pi-trash"
-                        class="m-1 bg-red-500"
-                    />
                 </template>
             </Column>
         </DataTable>
@@ -84,24 +70,11 @@ import Column from 'primevue/column'
 import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
-import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import Loading from '@/components/Loading.vue'
-import { useOrder } from './useOrder'
+import { useVillage } from './useVillage'
 
-const {
-    orders,
-    columns,
-    loading,
-    villages,
-    selectedVillage,
-    dt,
-    totalRecords,
-    onPage,
-    search,
-    filterSearch,
-    deleteOrder
-} = useOrder()
+const { columns, loading, villages, dt, totalRecords, onPage, search, filterSearch } = useVillage()
 </script>
 
 <style lang="scss" scoped></style>

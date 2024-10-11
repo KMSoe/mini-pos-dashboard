@@ -44,8 +44,8 @@ export const useOrder = () => {
 
         try {
             await store.fetchOrders({
-                limit: params.value.rows,
-                page: params.value.page,
+                limit: params.value.rows ?? 10,
+                page: params.value.page ?? 1,
                 village_id: selectedVillage.value ? selectedVillage.value : 'all',
                 search: search.value ? search.value : ''
             })
@@ -62,6 +62,16 @@ export const useOrder = () => {
         }
 
         loading.value = false
+    }
+
+    const deleteOrder = async (id) => {
+        try {
+            await store.deleteOrder(id)
+            getOrderList()
+        } catch (error) {
+            loading.value = false
+            console.log(error)
+        }
     }
 
     const getOrderPageData = async () => {
@@ -128,6 +138,7 @@ export const useOrder = () => {
         totalRecords,
         onPage,
         search,
-        filterSearch
+        filterSearch,
+        deleteOrder
     }
 }

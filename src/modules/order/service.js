@@ -28,6 +28,11 @@ const service = {
 
         return response.data.data.order
     },
+    deleteOrder: async (id) => {
+        const response = await api.delete(`/orders/${id}`)
+
+        return response
+    },
     createCustomer: async (params) => {
         const response = await api.post('/customers', params)
 

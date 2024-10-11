@@ -6,12 +6,14 @@ import authRoutes from '@/modules/auth/route'
 import dashboardRoutes from '@/modules/dashboard/route'
 import customerRoutes from '@/modules/customer/route'
 import orderRoutes from '@/modules/order/route'
+import villageRoutes from '@/modules/village/route'
 
 const routes = [
     ...authRoutes,
     ...dashboardRoutes,
     ...customerRoutes,
     ...orderRoutes,
+    ...villageRoutes,
     {
         path: '/badpage',
         name: 'error404',

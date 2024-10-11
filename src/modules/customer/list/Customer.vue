@@ -60,6 +60,13 @@
                 :header="column.header"
                 :sortable="column.sortable"
             />
+            <Column field="action" header="Action">
+                <template #body="slotProps">
+                    <router-link :to="{ name: 'customer-edit', params: { id: slotProps.data.id } }">
+                        <Button icon="pi pi-pencil" class="m-1" />
+                    </router-link>
+                </template>
+            </Column>
         </DataTable>
 
         <Loading v-if="loading" />

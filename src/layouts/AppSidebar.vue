@@ -30,7 +30,8 @@ export default defineComponent({
         const menuItems = [
             { icon: 'pi pi-home', text: 'Dashboard', route: 'dashboard' },
             { icon: 'pi pi-user', text: 'Customers', route: 'customer' },
-            { icon: 'pi pi-user', text: 'Orders', route: 'order' }
+            { icon: 'pi pi-user', text: 'Orders', route: 'order' },
+            { icon: 'pi pi-user', text: 'Villages', route: 'village' }
         ]
 
         return {

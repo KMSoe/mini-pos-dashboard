@@ -2,25 +2,25 @@ import AppLayout from '@/layouts/AppLayout.vue'
 
 const moduleRoutes = [
     {
-        path: '/orders',
+        path: '/villages',
         component: AppLayout,
         children: [
             {
                 path: '',
-                name: 'order',
-                component: () => import('@/modules/order/list/Order.vue'),
+                name: 'village',
+                component: () => import('@/modules/village/list/Village.vue'),
                 meta: { auth: true }
             },
             {
-                path: 'add-order',
-                name: 'add-order',
-                component: () => import('@/modules/order/entry/New.vue'),
+                path: 'create',
+                name: 'village-create',
+                component: () => import('@/modules/village/entry/New.vue'),
                 meta: { auth: true }
             },
             {
                 path: ':id/edit',
-                name: 'edit-order',
-                component: () => import('@/modules/order/edit/Edit.vue'),
+                name: 'village-edit',
+                component: () => import('@/modules/village/edit/Edit.vue'),
                 meta: { auth: true }
             }
         ]

@@ -26,7 +26,7 @@ const service = {
     updateCustomer: async (params) => {
         const response = await api.put(`/customers/${params.id}`, params)
 
-        return response.data.data.customer
+        return response.data.customer
     }
 }
 
